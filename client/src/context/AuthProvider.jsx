@@ -15,19 +15,17 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribed = auth.onIdTokenChanged((user) => {
-            console.log("[From AuthProvider]", { user });
             if (user?.uid) {
                 setUser(user);
                 if (user.accessToken !== localStorage.getItem("accessToken")) {
                     localStorage.setItem("accessToken", user.accessToken);
-                    window.location.reload();
+                    // window.location.reload();
                 }
                 setIsLoading(false);
                 return;
             }
 
             // reset user info
-            console.log("reset");
             setIsLoading(false);
             setUser({});
             localStorage.clear();
