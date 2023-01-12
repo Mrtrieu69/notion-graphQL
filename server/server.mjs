@@ -5,7 +5,7 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import bodyParser from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
-import fakeDate from "./fakeDate/index.js";
+import fakeData from "./fakeData/index.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -14,7 +14,7 @@ const typeDefs = `#graphql
     type Folder{
         id: String,
         name: String,
-        createAt: String,
+        createdAt: String,
         author: Author
     }
 
@@ -30,11 +30,11 @@ const typeDefs = `#graphql
 
 const resolvers = {
     Query: {
-        folders: () => fakeDate.folders,
+        folders: () => fakeData.folders,
     },
     Folder: {
         author: (parent) =>
-            fakeDate.authors.find((author) => author.id === parent.authorId),
+            fakeData.authors.find((author) => author.id === parent.authorId),
     },
 };
 

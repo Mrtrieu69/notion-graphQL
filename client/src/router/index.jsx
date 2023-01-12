@@ -27,6 +27,25 @@ export default createBrowserRouter([
                     {
                         element: <Home />,
                         path: "/",
+                        loader: async () => {
+                            const query = `query Folders {
+                                                folders {
+                                                id
+                                                name
+                                                createdAt
+                                                }
+                                            }`;
+
+                            const data = await fetch("http://localhost:4000/graphql", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Accept: "application/json",
+                                },
+                                body: JSON.stringify({ query }),
+                            }).then((res) => res.json());
+                            return data.data;
+                        },
                         children: [
                             {
                                 element: <NoteList />,
